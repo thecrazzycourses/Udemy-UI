@@ -28,7 +28,7 @@ class MovieList extends Component {
                                             <a>{movie.name}</a>
                                         </Link>
                                     </h4>
-                                    <h5>$24.99</h5>
+                                    <div className="movie-genre">{movie.genre}</div>
                                     <p className="card-text">{this.shorten(movie.description, 100)}</p>
                                 </div>
                                 <div className="card-footer">

@@ -1,15 +1,28 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 const CreateMovieForm = (props) => {
 
-    const [form, setForm] = useState({
+    const [isMovieDataLoaded, setIsMovieDataLoaded] = useState(false);
+
+    const movieForm = {
         name: '',
         description: '',
         rating: '',
         image: '',
         cover: '',
         longDes: ''
-    });
+    }
+
+    const movieFormData = props.movie ? {...props.movie} : movieForm
+
+    const [form, setForm] = useState(movieForm);
+
+    useEffect(() => {
+        if (props.movie) {
+            setForm(props.movie)
+            setIsMovieDataLoaded(true)
+        }
+    }, [isMovieDataLoaded])
 
     const handleChange = (event) => {
         setForm({...form, [event.target.name]: event.target.value});
@@ -35,7 +48,6 @@ const CreateMovieForm = (props) => {
 
     return (
         <form>
-            <div>{JSON.stringify(form)}</div>
             <div className="form-group">
                 <label htmlFor="name">Name</label>
                 <input
@@ -105,7 +117,10 @@ const CreateMovieForm = (props) => {
                     <option>action</option>
                 </select>
             </div>
-            <button onClick={onCreateMovieForm} type="button" className="btn btn-primary">Upload
+            <button
+                onClick={onCreateMovieForm}
+                type="button"
+                className="btn btn-primary">{props.submitButton || 'Create'}
             </button>
         </form>
     );

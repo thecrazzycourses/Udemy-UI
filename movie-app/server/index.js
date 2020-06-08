@@ -7,30 +7,73 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 
 const filePath = './data.json'
-const data = require(filePath)
+const fs = require('fs')
+const path = require('path')
+const moviesData = require(filePath)
 
 app.prepare().then(() => {
 
     const server = express();
     server.use(bodyParser.json());
 
+    // Find All Movies
     server.get("/api/v1/movies", (req,res) => {
-        return res.json(data)
+        return res.json(moviesData)
     })
 
+    // Find Movie By ID
+    server.get("/api/v1/movies/:id", (req,res) => {
+        const {id} = req.params;
+        const movie = moviesData.find((movie) => { return movie.id === id});
+        return res.json(movie);
+    })
+
+    // Create New Movie
     server.post("/api/v1/movies", (req,res) => {
         const movie = req.body;
-        return res.json({movie})
+        moviesData.push(movie);
+
+        const pathToFile = path.join(__dirname, filePath);
+        const stringifiedData = JSON.stringify(moviesData, null, 2);
+        fs.writeFile(pathToFile, stringifiedData, (error) => {
+            if(error) {
+                return res.status(422).send(error);
+            }
+            return res.json('Movie has been successfully added.')
+        })
     })
 
+    // Update Movie By ID
     server.patch("/api/v1/movies/:id", (req,res) => {
         const {id} = req.params;
-        return res.json({message: `Update Movie with ID: ${id}`})
+        const movie = req.body;
+        const movieIndex = moviesData.findIndex((movie) => { return movie.id === id});
+        moviesData[movieIndex] = movie;
+
+        const pathToFile = path.join(__dirname, filePath);
+        const stringifiedData = JSON.stringify(moviesData, null, 2);
+        fs.writeFile(pathToFile, stringifiedData, (error) => {
+            if(error) {
+                return res.status(422).send(error);
+            }
+            return res.json(movie)
+        })
     })
 
+    // Delete Movie By ID
     server.delete("/api/v1/movies/:id", (req,res) => {
         const {id} = req.params;
-        return res.json({message: `Deleted Movie with ID: ${id}`})
+        const movieIndex = moviesData.findIndex((movie) => { return movie.id === id});
+        moviesData.splice(movieIndex, 1);
+
+        const pathToFile = path.join(__dirname, filePath);
+        const stringifiedData = JSON.stringify(moviesData, null, 2);
+        fs.writeFile(pathToFile, stringifiedData, (error) => {
+            if(error) {
+                return res.status(422).send(error);
+            }
+            return res.json('Movie has been successfully deleted.')
+        })
     })
 
     server.get('*', (req, res) => {

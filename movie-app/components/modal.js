@@ -20,7 +20,7 @@ class Modal extends Component {
         return (
             <div>
                 <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                    Upload Movie
+                    Create Movie
                 </button>
 
                 <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog"

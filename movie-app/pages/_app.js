@@ -3,15 +3,17 @@ import App from "next/app";
 import Navbar from "../components/navbar";
 import Head from "next/head";
 import Footer from "../components/footer";
+import '../styles/index.scss';
 
 class MovieApp extends App {
     // Request will come here first, getInitialProps called, request goes to page we requested
     // there getInitialProps will be called, whatever we return will be set in appProps
     // we pass the appProps.pageProps to that page which has initial data (api call) to render that page
-    static async getInitialProps(context) {
-        const appProps = await App.getInitialProps(context);
-        return { ...appProps }
-    }
+
+    // static async getInitialProps(context) {
+    //     const appProps = await App.getInitialProps(context);
+    //     return { ...appProps }
+    // }
 
     render() {
         const {Component, pageProps} = this.props;
@@ -43,12 +45,18 @@ class MovieApp extends App {
                 <style jsx>{`
                   .page-container {
                     margin-top: 80px;
+                    padding-bottom: 200px;
                   }
                 `}
                 </style>
             </div>
         );
     }
+}
+
+MovieApp.getInitialProps = async (context) => {
+    const appProps = await App.getInitialProps(context);
+    return { ...appProps }
 }
 
 export default MovieApp;
