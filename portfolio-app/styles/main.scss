@@ -1,0 +1,45 @@
+// FONTS
+@import "./shared/fonts";
+
+// COLOR
+@import "./shared/colors";
+
+// PAGES
+@import "./index";
+@import "./header";
+@import "./portfolio";
+
+html, body {
+  height:100%;
+  width:100%;
+  font-family: 'Montserrat', 'Helvetica';
+}
+
+.absolute {
+  position: absolute;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.base-page {
+  padding: 150px 0px 100px 0px;
+  color: black;
+  background-color: #ecedee;
+  min-height: 100vh;
+
+  .page-header {
+    .page-header-title {
+      font-weight: 700;
+      color: black;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.error {
+  font-weight: 700;
+  color: red;
+}

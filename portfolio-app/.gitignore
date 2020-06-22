@@ -29,18 +29,7 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-# Idea
-.idea
-*.iml
-
-**/*/*.iml
-**/*.iml
-
-**/*/.idea
-**/.idea
-
-**/*/node_modules
-**/node_modules
-
-**/*/.next
-**/.next
+# Next Config
+./server/config/*
+./server/config/dev.js
+./server/config/prod.js
