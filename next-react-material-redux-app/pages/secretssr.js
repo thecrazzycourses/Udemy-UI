@@ -5,6 +5,10 @@ import withAuth from "../src/common/hoc/withAuth";
 
 const SecretSSR = ({user}) => {
 
+    const checkAuth = () => {
+
+    }
+
     return (
         <BaseLayout user={user} loading={false}>
             <h1>Secret SSR Page - Hello {user && user.name}</h1>

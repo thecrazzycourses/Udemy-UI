@@ -60,8 +60,6 @@ const Login = () => {
     return (
         <span onClick={() => router.push('' +
             '/api/v1/login')}>Login</span>
-
-        /*<a href="/api/v1/login">Login</a>*/
     )
 
 }

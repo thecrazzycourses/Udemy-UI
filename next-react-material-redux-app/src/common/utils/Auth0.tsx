@@ -32,7 +32,9 @@ export const authorizeUser = async (req, res) => {
 
 export const withAuthSSR = () => (role) => {
     return async ({req, res}) => {
-        console.log(req);
+        if (RegExp('(\_next\/data\/development|.+)', 'g').test(req.url)) {
+            return {props: {}};
+        }
         const session = await auth0.getSession(req);
         if (!session || !session.user || (role && !isAuthorized(session.user, role))) {
             res.writeHead(302, {
